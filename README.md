@@ -1,4 +1,5 @@
 # AISDN-2020-paczki
+```
 Paczki
 Twoim zadaniem jest zapakowanie samochodu przedmiotami. Masz do wyboru n przedmiotów
 Za przewóz i-tego przedmiotu możesz uzyskać Pi złotych (i=1,2,..,n).
@@ -50,3 +51,4 @@ Ilość przedmiotów n=1.
 Wypłaty za przedmioty Pi to 596 zł.
 Wagi przedmiotów Wi to 997 kg.
 Ładowność wozu C=550 kg.
+```
