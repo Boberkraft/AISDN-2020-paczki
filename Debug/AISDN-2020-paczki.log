@@ -1,0 +1,28 @@
+﻿  main.cpp
+C:\p\AISDN-2020-paczki\main.cpp(47,14): error C2280: 'Pack &Pack::operator =(const Pack &)': attempting to reference a deleted function
+C:\p\AISDN-2020-paczki\main.cpp(15): message : compiler has generated 'Pack::operator =' here
+C:\p\AISDN-2020-paczki\main.cpp(15,1): message : 'Pack &Pack::operator =(const Pack &)': function was implicitly deleted because 'Pack' has a data member 'Pack::cost' of const-qualified non-class type
+C:\p\AISDN-2020-paczki\main.cpp(9): message : see declaration of 'Pack::cost'
+C:\p\AISDN-2020-paczki\main.cpp(46): message : while compiling class template member function 'void Stack<Pack>::push(X)'
+          with
+          [
+              X=Pack
+          ]
+C:\p\AISDN-2020-paczki\main.cpp(79): message : see reference to function template instantiation 'void Stack<Pack>::push(X)' being compiled
+          with
+          [
+              X=Pack
+          ]
+C:\p\AISDN-2020-paczki\main.cpp(65): message : see reference to class template instantiation 'Stack<Pack>' being compiled
+C:\p\AISDN-2020-paczki\main.cpp(54,1): error C2440: 'return': cannot convert from 'int' to 'Pack'
+C:\p\AISDN-2020-paczki\main.cpp(54,1): message : No constructor could take the source type, or constructor overload resolution was ambiguous
+C:\p\AISDN-2020-paczki\main.cpp(51): message : while compiling class template member function 'X Stack<X>::pop(void)'
+          with
+          [
+              X=Pack
+          ]
+C:\p\AISDN-2020-paczki\main.cpp(84): message : see reference to function template instantiation 'X Stack<X>::pop(void)' being compiled
+          with
+          [
+              X=Pack
+          ]
