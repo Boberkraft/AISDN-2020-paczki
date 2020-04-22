@@ -2,110 +2,100 @@
 #include <vector>
 #include <string>
 
+int PARCELS[32];
 
-struct Pack
+static char stdinBuffer[1024*1024*150];
+static const char* stdinPos = stdinBuffer;
+
+static char stdoutBuffer[1024*1024*50];
+static char* stdoutPos = stdoutBuffer;
+
+ int readInt()
 {
-    int weight;
-    int cost;
+    int x = 0;
 
-    Pack()
-    {};
-
-    Pack(int r_weight, int r_cost)
-        : weight(r_weight)
-        , cost(r_cost)
-    {}
-};
-
-template <class X>
-class Stack {
-    int top;
-    int capacity;
-    X* a;
-public:
-    Stack();
-
-    void push(X & x);
-    int size();
-    X & pop();
-    X & get(int i);
-    void print();
-    // dodac dekstruktor
-};
-
-template <class X>
-Stack<X>::Stack() {
-    capacity = 20;
-    a = new X[20];
-    top = -1;
-}
-
-template <class X>
-int Stack<X>::size() {
-    return top + 1;
-}
-
-template <class X>
-void Stack<X>::push(X &v) {
-
-    top++;
-    a[top] = v;
-}
-
-template <class X>
-X &Stack<X>::pop() {
-    if (top < 0) {
-        throw std::logic_error("Stack undefrlow");
+    while (*stdinPos == ' ' || *stdinPos == '\n') {
+        ++stdinPos;
     }
 
-    return a[top--];
-}
-
-template <class X>
-X &Stack<X>::get(int i) {
-    return a[i];
-}
-
-int calculate(Pack parcels[], int size, Stack<Pack> & car, int weight, int cost) {
-    if (weight > 1766) {
-        return 0;
+    while (*stdinPos >= '0' && *stdinPos <= '9') {
+        x *= 10;
+        x += *stdinPos - '0';
+        ++stdinPos;
     }
 
-    for (int i = car.size(); i < size; i++) {
-        car.push(parcels[i]);
+    return x;
+}
 
-        int new_cost = parcels[i].cost;
-        int new_weight = parcels[i].weight;
+ int calculate(int size, int index, int weight, int profit, int max_weight) {
+    int best_profit = profit;
+    if (weight > max_weight) {
+        return -999;
+    }
 
-        if (parcels[i].cost > 100) {
-            new_cost -= 5;
-        }
+   // std::cout << "x " << index << std::endl;
 
-        int this_cost = calculate(
-            parcels, size, car, 
-            weight + new_weight,
-            cost + new_cost
+    if (index > 100) {
+        std::cout << "hej" << std::endl;
+        exit(0);
+    }
+    for (int i = index; i < size; i++) {
+        int potential_profit = calculate(
+            size, i + 1, 
+            weight + PARCELS[15 + i],
+            profit + PARCELS[i], 
+            max_weight
         );
-        if (this_cost > cost) {
-            cost = this_cost;
+        if (potential_profit > best_profit) {
+            best_profit = potential_profit;
         }
-        car.pop();
     }
 
-    return cost;
+    return best_profit;
+}
+
+ void process_car() {
+    int how_many_parcels, max_weight;
+    how_many_parcels = readInt();
+
+    for (int i = 0; i < how_many_parcels; i++) {
+        // Wyp³aty za przedmioty Pi.
+        PARCELS[i] = readInt();
+    }
+    for (int i = 0; i < how_many_parcels + 0; i++) {
+        // Wagi przedmiotów Wi.
+        PARCELS[15 + i] = readInt();
+    }
+    for (int i = 0; i < how_many_parcels; i++) {
+        if (PARCELS[15 + i] > 100) {
+            PARCELS[i] -= 5;
+        }
+    }
+    max_weight = readInt();
+    int wynik = calculate(how_many_parcels, 0, 0, -20, max_weight);
+
+    if (wynik < 0) {
+        wynik = 0;
+    }
+
+    stdoutPos += snprintf(stdoutPos, 10000, "%d", wynik);
+    *stdoutPos = '\n';
+    stdoutPos++;
 }
 
 int main(int argc, char *argv[]) {
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cout.tie(NULL);
+    //setvbuf(stdout, buff, _IOFBF, 1024);
+    size_t sz = fread(stdinBuffer, sizeof(stdinBuffer), 1, stdin);
+    int how_many_cars;
+    how_many_cars = readInt();
 
-    Pack packs [] = {
-         Pack {588, 211},
-         Pack {40, 30},
-         Pack {307, 974},
-         Pack {367, 943},
-         Pack {206, 622}
-    };
+    for (int i = 0; i < how_many_cars; i++) {
+        process_car();
+    }
 
-    // wynik 965
-    auto car = Stack<Pack>{};
-    std::cout << calculate(packs, 5, car, 0, 0) << std::endl;
+    *stdoutPos = '\0';
+    printf("%s", stdoutBuffer);
 }
